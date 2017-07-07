@@ -18,7 +18,7 @@ before_script:
       rm $TMP;
       unset TMP;"
 script:
-    - "PATH=$(pwd)/firefox;$PATH:$(pwd)/ChakraCoreFiles/bin:$(pwd)/jsshell
+    - "PATH=$(pwd)/firefox:$PATH:$(pwd)/ChakraCoreFiles/bin:$(pwd)/jsshell
       ESHOST_SKIP_D8=1
       ESHOST_SKIP_JSC=1
       ESHOST_SKIP_CHROME=1
