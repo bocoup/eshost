@@ -3,18 +3,18 @@
 const runify = require('../');
 const assert = require('assert');
 
+const isWindows = process.platform === 'win32' ||
+  process.env.OSTYPE === 'cygwin' ||
+  process.env.OSTYPE === 'msys';
+
 const hosts = [
-  ['./hosts/js.exe', 'jsshell'],
-  ['./hosts/ch.exe', 'ch'],
-  ['c:/program files/nodejs/node.exe', 'node'],
-  ['../v8/build/Release/d8.exe', 'd8'],
-  ['../webkit/build/bin64/jsc.exe', 'jsc'],
-  /*[undefined, 'chrome'],*/
-  
-  //['C:/Program Files (x86)/Mozilla Firefox/firefox.exe', 'firefox'],
-  /*['C:/Program Files (x86)/Nightly/firefox.exe', 'firefox'],
-  ['C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe', 'chrome'],
-  */
+  ['js', 'jsshell'],
+  ['ch', 'ch'],
+  ['node', 'node'],
+  ['d8', 'd8'],
+  ['jsc', 'jsc'],
+  ['chrome', 'chrome'],
+  ['firefox', 'firefox'],
 ];
 
 const timeout = function(ms) {
@@ -32,6 +32,11 @@ hosts.forEach(function (record) {
     let agent;
 
     before(function() {
+	  if (process.env['ESHOST_SKIP_' + host.toUpperCase()]) {
+		this.skip();
+		return;
+	  }
+
       return runify.createAgent(type, { hostPath: host }).then(a => agent = a);
     });
 

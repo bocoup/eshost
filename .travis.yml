@@ -1,0 +1,11 @@
+---
+language: node_js
+before_script:
+    - wget https://aka.ms/chakracore/cc_linux_x64_1_5_2
+    - tar -xvf cc_linux_x64_1_5_2
+script:
+    - export ESHOST_SKIP_D8=1
+    - ESHOST_SKIP_JSC=1
+    - ESHOST_SKIP_CHROME=1
+    - ESHOST_SKIP_FIREFOX=1
+    - npm test
