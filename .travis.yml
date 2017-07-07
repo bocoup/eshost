@@ -7,9 +7,9 @@ before_script:
     - wget https://aka.ms/chakracore/cc_linux_x64_1_5_2
     - tar -xvf cc_linux_x64_1_5_2
 script:
-    - PATH=$PATH:$(pwd)/ChakraCoreFiles/bin/ \
+    - "PATH=$PATH:$(pwd)/ChakraCoreFiles/bin/ \
       ESHOST_SKIP_D8=1 \
       ESHOST_SKIP_JSC=1 \
       ESHOST_SKIP_CHROME=1 \
       ESHOST_SKIP_FIREFOX=1 \
-      npm test
+      npm test"

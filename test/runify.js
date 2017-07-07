@@ -32,10 +32,10 @@ hosts.forEach(function (record) {
     let agent;
 
     before(function() {
-	  if (process.env['ESHOST_SKIP_' + host.toUpperCase()]) {
-		this.skip();
-		return;
-	  }
+      if (process.env['ESHOST_SKIP_' + host.toUpperCase()]) {
+        this.skip();
+        return;
+      }
 
       return runify.createAgent(type, { hostPath: host }).then(a => agent = a);
     });
