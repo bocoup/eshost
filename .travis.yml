@@ -15,6 +15,8 @@ before_script:
     - "export TMP=$(mktemp);
       wget https://archive.mozilla.org/pub/firefox/nightly/2017/07/2017-07-07-10-01-38-mozilla-central/firefox-56.0a1.en-US.linux-x86_64.tar.bz2 -O $TMP;
       tar -xvf $TMP;
+wget https://github.com/mozilla/geckodriver/releases/download/v0.17.0/geckodriver-v0.17.0-linux64.tar.gz -O $TMP;
+      tar --directory firefox -xvf $TMP;
       rm $TMP;
       unset TMP;"
 script:
