@@ -6,15 +6,15 @@ sudo: false
 before_script:
     - wget https://aka.ms/chakracore/cc_linux_x64_1_5_2
     - tar -xvf cc_linux_x64_1_5_2
-    - "TMP=$(mktemp)
-      wget https://archive.mozilla.org/pub/firefox/nightly/latest-mozilla-central/jsshell-linux-x86_64.zip -O $TMP
-      mkdir jsshell
-      unzip -d jsshell $TMP
+    - "export TMP=$(mktemp);
+      wget https://archive.mozilla.org/pub/firefox/nightly/latest-mozilla-central/jsshell-linux-x86_64.zip -O $TMP;
+      mkdir jsshell;
+      unzip -d jsshell $TMP;
       rm $TMP"
 script:
-    - "PATH=$PATH:$(pwd)/ChakraCoreFiles/bin/:$(pwd)/jsshell \
-      ESHOST_SKIP_D8=1 \
-      ESHOST_SKIP_JSC=1 \
-      ESHOST_SKIP_CHROME=1 \
-      ESHOST_SKIP_FIREFOX=1 \
+    - "PATH=$PATH:$(pwd)/ChakraCoreFiles/bin/:$(pwd)/jsshell
+      ESHOST_SKIP_D8=1
+      ESHOST_SKIP_JSC=1
+      ESHOST_SKIP_CHROME=1
+      ESHOST_SKIP_FIREFOX=1
       npm test"
