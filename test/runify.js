@@ -25,6 +25,7 @@ const timeout = function(ms) {
 
 hosts.forEach(function (record) {
   const host = record[0];
+  const hostBin = host + (isWindows ? '.exe' : '');
   const type = record[1];
 
   describe(`${type} (${host})`, function () {
@@ -37,7 +38,7 @@ hosts.forEach(function (record) {
         return;
       }
 
-      return runify.createAgent(type, { hostPath: host }).then(a => agent = a);
+      return runify.createAgent(type, { hostPath: hostBin }).then(a => agent = a);
     });
 
     after(function() {
