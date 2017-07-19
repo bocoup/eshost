@@ -7,24 +7,44 @@ before_install:
     - export DISPLAY=:99.0
     - sh -e /etc/init.d/xvfb start
 before_script:
-    - wget https://aka.ms/chakracore/cc_linux_x64_1_5_2
-    - tar -xvf cc_linux_x64_1_5_2
-    - "export TMP=$(mktemp);
-      wget https://archive.mozilla.org/pub/firefox/nightly/2017/07/2017-07-07-10-01-38-mozilla-central/jsshell-linux-x86_64.zip -O $TMP;
-      mkdir jsshell;
-      unzip -d jsshell $TMP;
-      rm $TMP;
-      unset TMP"
-    - "export TMP=$(mktemp);
-      wget https://archive.mozilla.org/pub/firefox/nightly/2017/07/2017-07-07-10-01-38-mozilla-central/firefox-56.0a1.en-US.linux-x86_64.tar.bz2 -O $TMP;
-      tar -xvf $TMP;
-      wget https://github.com/mozilla/geckodriver/releases/download/v0.17.0/geckodriver-v0.17.0-linux64.tar.gz -O $TMP;
-      tar --directory firefox -xvf $TMP;
-      rm $TMP;
-      unset TMP;"
+env:
+  - ESHOST_SKIP_D8=1
+  - ESHOST_SKIP_JSC=1
+  - ESHOST_SKIP_CHROME=1
+  - ESHOST_SKIP_FIREFOX=1
+  - ESHOST_SKIP_JSSHELL=1
+  - ESHOST_SKIP_CHAKRA=1
+matrix:
+  include:
+  - env: ESHOST_TARGET=firefox
+  - env: ESHOST_TARGET=chakra
+  - env: ESHOST_TARGET=jsshell
 script:
-    - "PATH=$(pwd)/firefox:$PATH:$(pwd)/ChakraCoreFiles/bin:$(pwd)/jsshell
-      ESHOST_SKIP_D8=1
-      ESHOST_SKIP_JSC=1
-      ESHOST_SKIP_CHROME=1
-      npm test"
+    - 'if [[ "$ESHOST_TARGET" == "firefox" ]]; then
+        export TMP=$(mktemp);
+        wget https://archive.mozilla.org/pub/firefox/nightly/2017/07/2017-07-07-10-01-38-mozilla-central/firefox-56.0a1.en-US.linux-x86_64.tar.bz2 -O $TMP;
+        tar -xvf $TMP;
+        wget https://github.com/mozilla/geckodriver/releases/download/v0.17.0/geckodriver-v0.17.0-linux64.tar.gz -O $TMP;
+        tar --directory firefox -xvf $TMP;
+        rm $TMP;
+        unset TMP;
+        PATH=$(pwd)/firefox:$PATH
+        unset ESHOST_SKIP_FIRFOX;
+      elif [[ "$ESHOST_TARGET" == "jsshell" ]]; then
+        export TMP=$(mktemp);
+        wget https://archive.mozilla.org/pub/firefox/nightly/2017/07/2017-07-07-10-01-38-mozilla-central/jsshell-linux-x86_64.zip -O $TMP;
+        mkdir jsshell;
+        unzip -d jsshell $TMP;
+        rm $TMP;
+        unset TMP;
+        PATH=$PATH:$(pwd)/jsshell
+        unset ESHOST_SKIP_JSSHELL;
+      elif [[ "$ESHOST_TARGET" == "chakra" ]]; then
+        wget https://aka.ms/chakracore/cc_linux_x64_1_5_2;
+        tar -xvf cc_linux_x64_1_5_2;
+        PATH=$PATH:$(pwd)/chaktracorefiles/bin
+        unset ESHOST_SKIP_CHAKRA
+      else
+        exit 1;
+      fi
+      npm test'
