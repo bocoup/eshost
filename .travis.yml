@@ -20,7 +20,7 @@ install: '
     export ESHOST_SKIP_NODE=1
 
     if [[ "$ESHOST_TARGET" == "node" ]]; then
-      echo The Node.js host does not have additional dependencies.
+      echo The Node.js host does not have additional dependencies.;
     elif [[ "$ESHOST_TARGET" == "firefox" ]]; then
       export TMP=$(mktemp);
       wget https://archive.mozilla.org/pub/firefox/nightly/2017/07/2017-07-07-10-01-38-mozilla-central/firefox-56.0a1.en-US.linux-x86_64.tar.bz2 -O $TMP;
@@ -29,7 +29,7 @@ install: '
       tar --directory firefox -xvf $TMP;
       rm $TMP;
       unset TMP;
-      export PATH=$(pwd)/firefox:$PATH
+      export PATH=$(pwd)/firefox:$PATH;
       unset ESHOST_SKIP_FIREFOX;
     elif [[ "$ESHOST_TARGET" == "jsshell" ]]; then
       export TMP=$(mktemp);
@@ -38,12 +38,12 @@ install: '
       unzip -d jsshell $TMP;
       rm $TMP;
       unset TMP;
-      export PATH=$PATH:$(pwd)/jsshell
+      export PATH=$PATH:$(pwd)/jsshell;
       unset ESHOST_SKIP_JS;
     elif [[ "$ESHOST_TARGET" == "chakra" ]]; then
       wget https://aka.ms/chakracore/cc_linux_x64_1_5_2;
       tar -xvf cc_linux_x64_1_5_2;
-      export PATH=$PATH:$(pwd)/chaktracorefiles/bin
+      export PATH=$PATH:$(pwd)/chaktracorefiles/bin;
       unset ESHOST_SKIP_CH;
     else
       exit 1;
