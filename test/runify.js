@@ -367,10 +367,22 @@ hosts.forEach(function (record) {
              print(typeof x);
            \`);
            print(typeof x);
-        `).then(function(result) {
+         `)
+        .then(function(result) {
             assert.equal(result.stderr, '');
             assert(result.stdout.match(/^object\r?\nstring\r?\nnumber\r?\n/m));
-           });
+          });
+    });
+
+    it('observes correct cross-script interaction semantics', function () {
+      return agent.evalScript(`
+           print($.evalScript('let eshost;').type);
+           print($.evalScript('let eshost;').type);
+         `)
+        .then(function(result) {
+            assert.equal(result.stderr, '');
+            assert(result.stdout.match(/^normal\r?\nthrow/m));
+          })
     });
 
     // mostly this test shouldn't hang (if it hangs, it's a bug)
