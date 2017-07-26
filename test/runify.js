@@ -430,7 +430,7 @@ hosts.forEach(function (record) {
         // The GeckoDriver project cannot currently destroy browsing sessions
         // whose main thread is blocked.
         // https://github.com/mozilla/geckodriver/issues/825
-        if (effectiveType === 'firefox' || effectiveType === 'MicrosoftEdge') {
+        if (['firefox', 'MicrosoftEdge', 'safari'].indexOf(effectiveType) > -1) {
           this.skip();
           return;
         }
