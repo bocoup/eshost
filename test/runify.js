@@ -339,6 +339,40 @@ hosts.forEach(function (record) {
       });
     });
 
+    it('tolerates broken execution environments', function () {
+      return agent.evalScript(`
+            Object.defineProperty(Object.prototype, "length", {
+                get: function () {
+                    return 1;
+                },
+                configurable: true
+              });
+
+              print('okay');
+          `).then(function(result) {
+             assert.equal(result.stderr, '');
+             assert(result.stdout.match(/^okay\r?\n/m));
+            });;
+    });
+
+    it('supports realm nesting', function () {
+      return agent.evalScript(`
+           x = 0;
+           $.createRealm().evalScript(\`
+             x = '';
+             $.createRealm().evalScript(\\\`
+               x = {};
+               print(typeof x);
+             \\\`);
+             print(typeof x);
+           \`);
+           print(typeof x);
+        `).then(function(result) {
+            assert.equal(result.stderr, '');
+            assert(result.stdout.match(/^object\r?\nstring\r?\nnumber\r?\n/m));
+           });
+    });
+
     // mostly this test shouldn't hang (if it hangs, it's a bug)
     it('can kill infinite loops', function () {
       // The GeckoDriver project cannot currently destroy browsing sessions
