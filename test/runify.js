@@ -349,26 +349,26 @@ hosts.forEach(function (record) {
               });
 
               print('okay');
-          `).then(function(result) {
+          `).then((result) => {
              assert.equal(result.stderr, '');
              assert(result.stdout.match(/^okay\r?\n/m));
-            });;
+            });
     });
 
     it('supports realm nesting', function () {
       return agent.evalScript(`
-           x = 0;
-           $.createRealm().evalScript(\`
-             x = '';
-             $.createRealm().evalScript(\\\`
-               x = {};
-               print(typeof x);
-             \\\`);
-             print(typeof x);
-           \`);
-           print(typeof x);
-         `)
-        .then(function(result) {
+            x = 0;
+            $.createRealm().evalScript(\`
+              x = '';
+              $.createRealm().evalScript(\\\`
+                x = {};
+                print(typeof x);
+              \\\`);
+              print(typeof x);
+            \`);
+            print(typeof x);
+          `)
+        .then((result) => {
             assert.equal(result.stderr, '');
             assert(result.stdout.match(/^object\r?\nstring\r?\nnumber\r?\n/m));
           });
@@ -379,10 +379,10 @@ hosts.forEach(function (record) {
            print($.evalScript('let eshost;').type);
            print($.evalScript('let eshost;').type);
          `)
-        .then(function(result) {
+        .then((result) => {
             assert.equal(result.stderr, '');
             assert(result.stdout.match(/^normal\r?\nthrow/m));
-          })
+          });
     });
 
     // mostly this test shouldn't hang (if it hangs, it's a bug)
