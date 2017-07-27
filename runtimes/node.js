@@ -44,6 +44,14 @@ var $ = {
   setGlobal: function (name, value) {
     this.global[name] = value;
   },
+  transfer: function(buffer) {
+    /**
+     * The V8 "runtime function" is made available via the
+     * `--allow-natives-syntax` flag. Here, the invocation takes place in eval
+     * code so that the source file remains valid ECMAScript.
+     */
+    eval('%ArrayBufferNeuter(buffer);');
+  },
   destroy: function() { /* noop */ },
   source: $SOURCE
 };

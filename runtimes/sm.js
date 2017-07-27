@@ -32,6 +32,7 @@ var $ = {
   setGlobal(name, value) {
     this.global[name] = value;
   },
+  transfer: detachArrayBuffer,
   destroy: function() { /* noop */ },
   source: $SOURCE
 };

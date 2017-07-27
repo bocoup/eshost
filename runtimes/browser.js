@@ -82,6 +82,9 @@ var $ = window.$ = {
   setGlobal: function (name, value) {
     this.global[name] = value;
   },
+  transfer: function(buffer) {
+    postMessage({},  '*', [buffer]);
+  },
   destroy: function() {
     $.socket.emit('destroy')
   },

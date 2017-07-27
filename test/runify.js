@@ -377,6 +377,18 @@ hosts.forEach(function (record) {
             });
       });
 
+      it('implements $.transfer', function () {
+        return agent.evalScript(`
+             var a = new Int8Array(1);
+             $.transfer(a.buffer);
+             print(String(a[0]));
+           `)
+          .then((result) => {
+              assert.equal(result.stderr, '');
+              assert(result.stdout.match(/^undefined\r?\n/));
+            });
+      });
+
       // mostly this test shouldn't hang (if it hangs, it's a bug)
       it('can kill infinite loops', function () {
         // The GeckoDriver project cannot currently destroy browsing sessions
