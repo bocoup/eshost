@@ -125,6 +125,8 @@ install: |
         exit 1;
       fi
 
+      echo "Sauce Connect 'ready' file created. Continuing installation.'
+
       if [[ "$ESHOST_TARGET" == "remote:edge" ]]; then
         export ESHOST_REMOTE_BROWSERNAME=MicrosoftEdge
         export ESHOST_REMOTE_PLATFORM='Windows 10'
@@ -147,7 +149,7 @@ after_script: |
     cat selenium-server.log
   fi
 
-  if [[ "$ESHOST_TARGET" == "remote:edge" ]]; then
+  if [ -f sauce-connect.loc ]; then
     cat sauce-connect.log
   fi
 addons:
