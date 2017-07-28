@@ -112,6 +112,7 @@ install: |
       sc-4.4.8-linux/bin/sc \
         --logfile sauce-connect.log \
         --tunnel-domains eshost.test \
+        --tunnel-identifier $TRAVIS_JOB_NUMBER \
         --readyfile sauce-connect-ready &
       SC_PID="$!"
 

@@ -12,7 +12,8 @@ const remoteOptions = {
   capabilities: {
     browserName: process.env.ESHOST_REMOTE_BROWSERNAME || 'firefox',
     platform: process.env.ESHOST_REMOTE_PLATFORM || 'ANY',
-    version: process.env.ESHOST_REMOTE_VERSION || ''
+    version: process.env.ESHOST_REMOTE_VERSION || '',
+    'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER
   }
 };
 
