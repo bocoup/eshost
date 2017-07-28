@@ -6,16 +6,16 @@ before_install:
     - export DISPLAY=:99.0
     - sh -e /etc/init.d/xvfb start
 env:
-  - ESHOST_TARGET=node
-  - ESHOST_TARGET=firefox
-  - ESHOST_TARGET=chakra
-  - ESHOST_TARGET=jsshell
-  - ESHOST_TARGET=chrome
-  - ESHOST_TARGET=remote:firefox
-  # ESHOST_REMOTE_WEBDRIVER_SERVER depends on the SAUCE_ACCESS_KEY environment
-  # variable. That variable is not available until *after* the TravisCI JWT
-  # "plugin" runs., so the WebDriver server URL must be defined within the
-  # "install" script.
+  #- ESHOST_TARGET=node
+  #- ESHOST_TARGET=firefox
+  #- ESHOST_TARGET=chakra
+  #- ESHOST_TARGET=jsshell
+  #- ESHOST_TARGET=chrome
+  #- ESHOST_TARGET=remote:firefox
+  ## ESHOST_REMOTE_WEBDRIVER_SERVER depends on the SAUCE_ACCESS_KEY environment
+  ## variable. That variable is not available until *after* the TravisCI JWT
+  ## "plugin" runs., so the WebDriver server URL must be defined within the
+  ## "install" script.
   - ESHOST_TARGET=remote:edge
     SAUCE_USERNAME=jugglinmike
     ESHOST_WEB_HOST=eshost.test
@@ -105,6 +105,9 @@ install: |
     elif [[ "$ESHOST_TARGET" == "remote:edge" || "$ESHOST_TARGET" == "remote:safari" ]]; then
       wget https://saucelabs.com/downloads/sc-4.4.8-linux.tar.gz
       tar -xvf sc-4.4.8-linux.tar.gz
+
+      dig saucelabs.com
+      grep 'saucelabs.com' /etc/hosts
 
       sc-4.4.8-linux/bin/sc \
         --logfile sauce-connect.log \
