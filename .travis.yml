@@ -112,6 +112,7 @@ install: |
         --logfile=sauce-connect.log \
         --tunnel-domains=eshost.test \
         --tunnel-identifier=$TRAVIS_JOB_NUMBER \
+        --no-remove-colliding-tunnels \
         --readyfile=$ready_file &
       SC_PID="$!"
 
