@@ -106,13 +106,13 @@ install: |
       wget https://saucelabs.com/downloads/sc-4.4.8-linux.tar.gz
       tar -xvf sc-4.4.8-linux.tar.gz
 
-      $ready_file=sauce-connect-ready-$RANDOM
+      ready_file=sauce-connect-ready-$RANDOM
 
       sc-4.4.8-linux/bin/sc \
         --logfile sauce-connect.log \
         --tunnel-domains eshost.test \
         --tunnel-identifier=$TRAVIS_JOB_NUMBER \
-        --readyfile $ready_file &
+        --readyfile=$ready_file &
       SC_PID="$!"
 
       echo "Waiting for Sauce Connect 'ready' file..."
