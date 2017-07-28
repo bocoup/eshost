@@ -150,8 +150,14 @@ after_script: |
     cat selenium-server.log
   fi
 
-  if [ -f sauce-connect.loc ]; then
+  if [ -f sauce-connect.log ]; then
     cat sauce-connect.log
+  fi
+
+  if [[ "$SC_PID" != "" ]]; then
+    echo "Tearing down Sauce Connect tunnel."
+
+    kill $SC_PID
   fi
 addons:
   hosts:
