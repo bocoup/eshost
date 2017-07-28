@@ -110,7 +110,6 @@ install: |
         --logfile sauce-connect.log \
         --tunnel-domains eshost.test \
         --doctor \
-        --tunnel-identifier $TRAVIS_JOB_NUMBER \
         --readyfile sauce-connect-ready &
       SC_PID="$!"
 
