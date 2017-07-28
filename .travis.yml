@@ -109,8 +109,8 @@ install: |
       ready_file=sauce-connect-ready-$RANDOM
 
       sc-4.4.8-linux/bin/sc \
-        --logfile sauce-connect.log \
-        --tunnel-domains eshost.test \
+        --logfile=sauce-connect.log \
+        --tunnel-domains=eshost.test \
         --tunnel-identifier=$TRAVIS_JOB_NUMBER \
         --readyfile=$ready_file &
       SC_PID="$!"
