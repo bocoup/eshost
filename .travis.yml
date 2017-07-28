@@ -125,7 +125,7 @@ install: |
         exit 1;
       fi
 
-      echo "Sauce Connect 'ready' file created. Continuing installation.'
+      echo "Sauce Connect 'ready' file created. Continuing installation."
 
       if [[ "$ESHOST_TARGET" == "remote:edge" ]]; then
         export ESHOST_REMOTE_BROWSERNAME=MicrosoftEdge
