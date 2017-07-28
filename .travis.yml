@@ -20,10 +20,10 @@ env:
     SAUCE_USERNAME=jugglinmike
     ESHOST_WEB_HOST=eshost.test
     ESHOST_REMOTE_WEBDRIVER_SERVER=
-  - ESHOST_TARGET=remote:safari
-    SAUCE_USERNAME=jugglinmike
-    ESHOST_WEB_HOST=eshost.test
-    ESHOST_REMOTE_WEBDRIVER_SERVER=
+  #- ESHOST_TARGET=remote:safari
+  #  SAUCE_USERNAME=jugglinmike
+  #  ESHOST_WEB_HOST=eshost.test
+  #  ESHOST_REMOTE_WEBDRIVER_SERVER=
 install: |
     export ESHOST_SKIP_D8=1
     export ESHOST_SKIP_JSC=1
