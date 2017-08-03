@@ -2,7 +2,8 @@
 language: node_js
 node_js: "6"
 dist: trusty
-sudo: false
+sudo: required
+compiler: clang
 before_install:
     - export DISPLAY=:99.0
     - sh -e /etc/init.d/xvfb start
@@ -49,9 +50,17 @@ install: |
       export PATH=$PATH:$(pwd)/jsshell;
       unset ESHOST_SKIP_JSSHELL;
     elif [[ "$ESHOST_TARGET" == "chakra" ]]; then
-      wget https://aka.ms/chakracore/cc_linux_x64_1_5_2;
-      tar -xvf cc_linux_x64_1_5_2;
-      export PATH=$PATH:$(pwd)/ChakraCoreFiles/bin;
+
+      sudo apt-get update;
+      sudo apt-get install -y git build-essential cmake clang libicu-dev libunwind8-dev;
+
+      git clone https://github.com/Microsoft/ChakraCore --depth=1;
+      cd ChakraCore;
+      ./build.sh --debug;
+      export PATH=$PATH:$(pwd)/out/Debug;
+      # wget https://aka.ms/chakracore/cc_linux_x64_1_5_2;
+      # tar -xvf cc_linux_x64_1_5_2;
+      # export PATH=$PATH:$(pwd)/ChakraCoreFiles/bin;
       unset ESHOST_SKIP_CH;
     elif [[ "$ESHOST_TARGET" == "chrome" ]]; then
       channel=unstable
